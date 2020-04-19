@@ -1,0 +1,25 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      # To use this repository's private action, you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Hello world action step
+        uses: ./ # Uses an action in the root directory
+        id: hello
+        with:
+            username: ${{secrets.MAIL_USERNAME}}
+            password: ${{secrets.MAIL_PASSWORD}}
+            google_api_client_email: ${{secrets.GOOGLE_API_CLIENT_EMAIL}}
+            private_key: ${{secrets.PRIVATE_KEY}}
+            # Literal body:
+            # Read file contents as body:
+            to: santiagoparedes97@gmail.com
+            from: santiagoparedes97 # <user@example.com>
+            # Optional content type (defaults to text/plain):
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
