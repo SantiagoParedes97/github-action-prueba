@@ -5,7 +5,7 @@ const app = express();
 const server = http.Server(app);
 const GithubWebHook = require('express-github-webhook');
 const webhookHandler = GithubWebHook({ path: '/webhooks' });
-const MailService = require('./MailService');
+const mailService = require('./MailService');
 const config = require('./config')
 
 app.use(bodyParser.json()); // support json encoded bodies
