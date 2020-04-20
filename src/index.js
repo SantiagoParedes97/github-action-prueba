@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const server = http.Server(app);
 
 
 app.use(bodyParser.json()); // support json encoded bodies
@@ -18,6 +19,6 @@ app.post('/webhooks', (req,res) => {
     res.send('ok')
 });
 
-app.listen(9001, () => {
+server.listen(8080, () => {
     console.log("servidor levantado")
 });
