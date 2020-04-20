@@ -40,9 +40,10 @@ const sendMailToTeachers = async () => {
                 rejectUnauthorized: false
             }
         });
-        const tutorsMail = await getTeachers()
-
-        const info = await transport.sendMail(mailOptions(from, tutorsMail))
+        const tutors = await getTeachers()
+        const tutorsMails = tutors.map(tutor => tutor.email ).join(',')
+        console.log(tutorsMails)
+        const info = await transport.sendMail(mailOptions(from, tutorsMails))
     } catch (error) {
         core.setFailed(error.message)
     }
