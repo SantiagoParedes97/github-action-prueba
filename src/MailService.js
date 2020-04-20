@@ -16,7 +16,7 @@ class MailService {
         const author = payload.head_commit.author.name;
         console.log("Author: " + author);
         const getTeachersMails = require('./googleSpreadsheet')
-        return getTeachersMails('valenhz',config);
+        return getTeachersMails(author,config);
     }
     sendMailToTeachers(payload,config){
         const {username, password, from} = config;
