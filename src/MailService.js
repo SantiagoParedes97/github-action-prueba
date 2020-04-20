@@ -12,10 +12,11 @@ class MailService {
         };
     }
 
-    getTeachersMails(payload){
+    getTeachersMails(payload,config){
         const author = payload.head_commit.author.name;
+        console.log("Author: " + author);
         const getTeachersMails = require('./googleSpreadsheet')
-        return getTeachersMails(author);
+        return getTeachersMails(author,config);
     }
     sendMailToTeachers(payload,config){
         const {username, password, from} = config;
@@ -32,14 +33,15 @@ class MailService {
                 rejectUnauthorized: false
             }
         });
-        return this.getTeachersMails(payload)
+        return this.getTeachersMails(payload,config)
             .then(tutorsMails => tutorsMails.join(','))
             .then((tutorsMailsSerialized) => transport.sendMail(this.mailOptions(from, tutorsMailsSerialized,payload)))
     }
 
     sendMail(payload, config){
         const commitName = payload.head_commit.message;
-        console.log(this)
+        console.log(commitName);
+        console.log(commitName);
         if (commitName.includes("terminado")) {
             return this.sendMailToTeachers(payload,config);
         }

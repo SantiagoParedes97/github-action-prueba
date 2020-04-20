@@ -3,16 +3,15 @@ const bodyParser = require('body-parser');
 const http = require('http')
 const app = express();
 const server = http.Server(app);
-var GithubWebHook = require('express-github-webhook');
-var webhookHandler = GithubWebHook({ path: '/webhooks' });
-
+const GithubWebHook = require('express-github-webhook');
+const webhookHandler = GithubWebHook({ path: '/webhooks' });
+const MailService = require('./MailService');
+const config = require('./config')
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 webhookHandler.on('*', function (event, repo, data) {
-    console.log("Evento: " + event)
-    console.log("repo: " + repo)
-    console.log("data: " + JSON.stringify(data))
+    return mailService.sendMail(event,config)
 });
 app.use(webhookHandler)
 

@@ -43,14 +43,14 @@ const tutors = [
     }
 ]
 
-async function getTutorsMailFor(githubUser) {
+async function getTutorsMailFor(githubUser,config) {
     const doc = new GoogleSpreadsheet('1kavXnCLLdoKoXMVlw6_wFolzBvIuuNG9oqxNbc4Dwu8')
-    const client_email = core.getInput("google_api_client_email", {required: true})
-    const private_key = core.getInput("private_key", {required: true})
+    const clientEmail = config.client_email
+    const privateKey = config.private_key
 
     await doc.useServiceAccountAuth({
-        client_email: client_email,
-        private_key: private_key,
+        client_email: clientEmail,
+        private_key: privateKey,
     });
     await doc.loadInfo(); // loads document properties and worksheets
     console.log(doc.title);
