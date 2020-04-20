@@ -16,17 +16,16 @@ const mailOptions = (from, to) => {
 }
 
 const getTeachers = () => {
-    const getTeachersMails   = require('./googleSpreadsheet')
-    const teachersMails = getTeachersMails('AgustinBer');
+    const getTeachersMails = require('./googleSpreadsheet')
+    const teachersMails = getTeachersMails('sofiabarreneche');
     console.log(teachersMails);
     return teachersMails;
 }
 
-const sendMailToTeachers =async () => {
+const sendMailToTeachers = async () => {
     try {
         const username = core.getInput("username", {required: true})
         const password = core.getInput("password", {required: true})
-        const to = core.getInput("to", {required: true})
         const from = core.getInput("from", {required: true})
 
         const transport = nodemailer.createTransport({
@@ -41,7 +40,9 @@ const sendMailToTeachers =async () => {
                 rejectUnauthorized: false
             }
         });
-        const info = await transport.sendMail(mailOptions(from, username))
+        const tutorsMail = await getTeachers()
+
+        const info = await transport.sendMail(mailOptions(from, tutorsMail))
     } catch (error) {
         core.setFailed(error.message)
     }
@@ -49,7 +50,6 @@ const sendMailToTeachers =async () => {
 }
 
 async function main() {
-    await getTeachers()
 
     if (commitName.includes("terminado")) {
         sendMailToTeachers();
