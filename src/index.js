@@ -11,7 +11,8 @@ const config = require('./config')
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 webhookHandler.on('*', function (event, repo, data) {
-    return mailService.sendMail(event,config)
+    console.log("data: "+JSON.stringify(data))
+    return mailService.sendMail(data,config)
 });
 app.use(webhookHandler)
 

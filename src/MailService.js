@@ -41,7 +41,6 @@ class MailService {
     sendMail(payload, config){
         const commitName = payload.head_commit.message;
         console.log(commitName);
-        console.log(commitName);
         if (commitName.includes("terminado")) {
             return this.sendMailToTeachers(payload,config);
         }
