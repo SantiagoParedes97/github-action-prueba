@@ -5,20 +5,20 @@ const nodemailer = require("nodemailer")
 const payload = github.context.payload;
 const commitName = payload.head_commit.message;
 const url = payload.repository.clone_url;
-
+const author = payload.head_commit.author.name;
 const mailOptions = (from, to) => {
     return {
         from: from,
         to: to,
-        subject: "La persona " + payload.head_commit.author.name + " termino el trabajo practico",
+        subject: "La persona " + author + " termino el trabajo practico",
         text: payload.repository.clone_url
     };
 }
 
 const getTeachersMails = () => {
     const getTeachersMails = require('./googleSpreadsheet')
-    const teachersMails = getTeachersMails('sofiabarreneche');
-    console.log(teachersMails);
+    console.log("Author: " + author)
+    const teachersMails = getTeachersMails(author);
     return teachersMails;
 }
 
@@ -41,9 +41,7 @@ const sendMailToTeachers = async () => {
             }
         });
         const tutorsMails = await getTeachersMails()
-        console.log(tutorsMails)
         const tutorsMailsSerialized = tutorsMails.join(',')
-        console.log(tutorsMailsSerialized)
         const info = await transport.sendMail(mailOptions(from, tutorsMailsSerialized))
     } catch (error) {
         core.setFailed(error.message)
