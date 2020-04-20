@@ -15,7 +15,7 @@ const mailOptions = (from, to) => {
     };
 }
 
-const getTeachers = () => {
+const getTeachersMails = () => {
     const getTeachersMails = require('./googleSpreadsheet')
     const teachersMails = getTeachersMails('sofiabarreneche');
     console.log(teachersMails);
@@ -40,10 +40,11 @@ const sendMailToTeachers = async () => {
                 rejectUnauthorized: false
             }
         });
-        const tutors = await getTeachers()
-        const tutorsMails = tutors.map(tutor => tutor.email ).join(',')
+        const tutorsMails = await getTeachersMails()
         console.log(tutorsMails)
-        const info = await transport.sendMail(mailOptions(from, tutorsMails))
+        const tutorsMailsSerialized = tutorsMails.join(',')
+        console.log(tutorsMailsSerialized)
+        const info = await transport.sendMail(mailOptions(from, tutorsMailsSerialized))
     } catch (error) {
         core.setFailed(error.message)
     }

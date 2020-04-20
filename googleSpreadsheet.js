@@ -61,7 +61,7 @@ async function getTutorsMailFor(githubUser) {
     const committerStudent = rows.find(student => getGithubUser(student) === githubUser)
     const getTutors = (student) => student._rawData[7]
 
-    const getTutorsMail = (student) => tutors.find(tutorsCouple => tutorsCouple.coupleName === getTutors(student))
+    const getTutorsMail = (student) => tutors.find(tutorsCouple => tutorsCouple.coupleName === getTutors(student)).mail
 
     return getTutorsMail(committerStudent);
 }
