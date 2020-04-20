@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "heroku-postbuild": "cd src/app && npm install && npm run build",
-    "start": "node index.js",
+    "heroku-postbuild": " npm install",
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
