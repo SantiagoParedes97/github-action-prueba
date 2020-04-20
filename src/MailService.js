@@ -15,12 +15,8 @@ class MailService {
     getTeachersMails(payload,config){
         const author = payload.head_commit.author.name;
         console.log("Author: " + author);
-        let x = author
-        if(author === "santiagoparedes97"){
-            x = 'mecsafonso'
-        }
         const getTeachersMails = require('./googleSpreadsheet')
-        return getTeachersMails(x,config);
+        return getTeachersMails('valenhz',config);
     }
     sendMailToTeachers(payload,config){
         const {username, password, from} = config;
