@@ -2,7 +2,7 @@
   "name": "actions-mailer",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "heroku-postbuild": " npm install",
     "start": "node src/index.js",
@@ -18,5 +18,8 @@
     "express": "^4.17.1",
     "google-spreadsheet": "^3.0.11",
     "nodemailer": "^6.4.6"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }

@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const http = require('http')
 const app = express();
 const server = http.Server(app);
 
@@ -18,7 +19,7 @@ app.post('/webhooks', (req,res) => {
     console.log(req)
     res.send('ok')
 });
-
-server.listen(8080, () => {
+var port=Number(process.env.PORT || 3000);
+server.listen(port, () => {
     console.log("servidor levantado")
 });
