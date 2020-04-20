@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 webhookHandler.on('*', function (event, repo, data) {
     console.log("Evento: " + event)
     console.log("repo: " + repo)
-    console.log("data: " + data)
+    console.log("data: " + JSON.stringify(data))
 });
 app.use(webhookHandler)
 
