@@ -43,7 +43,7 @@ const tutors = [
     }
 ]
 
-async function getTutorsMailFor(githubUser,repository,config) {
+async function getTutorsMailFor(githubUser,config) {
     const doc = new GoogleSpreadsheet('1kavXnCLLdoKoXMVlw6_wFolzBvIuuNG9oqxNbc4Dwu8')
     const clientEmail = config.client_email
     const privateKey = config.private_key
