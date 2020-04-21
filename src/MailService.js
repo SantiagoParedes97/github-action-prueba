@@ -13,7 +13,7 @@ class MailService {
     }
 
     getTeachersMails(payload,config){
-        const author = payload.head_commit.author.name;
+        const author = payload.pusher.name;
         console.log("Author: " + author);
         const getTeachersMails = require('./googleSpreadsheet')
         return getTeachersMails(author,config);
@@ -39,8 +39,6 @@ class MailService {
     }
 
     sendMail(payload, config){
-        console.log("Payload")
-        console.log(payload)
         const commitName = payload.head_commit.message;
         if (commitName && commitName.toLowerCase().includes("terminado")) {
             return this.sendMailToTeachers(payload,config);
