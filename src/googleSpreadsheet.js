@@ -43,7 +43,7 @@ const tutors = [
     }
 ]
 
-async function getTutorsMailFor(githubUser,config) {
+async function getTutorsMailFor(githubUser,repository,config) {
     const doc = new GoogleSpreadsheet('1kavXnCLLdoKoXMVlw6_wFolzBvIuuNG9oqxNbc4Dwu8')
     const clientEmail = config.client_email
     const privateKey = config.private_key
@@ -59,8 +59,9 @@ async function getTutorsMailFor(githubUser,config) {
     const rows = await sheet.getRows({limit: 150, offset: 2}); // or use doc.sheetsById[id]
     const getGithubUser = (student) => student._rawData[5];
     const committerStudent = rows.find(student => getGithubUser(student) === githubUser)
-    console.log("github user: "+ githubUser)
     const getTutors = (student) => student._rawData[7]
+    committerStudent.save()
+
 
     const getTutorsMail = (student) => tutors.find(tutorsCouple => tutorsCouple.coupleName === getTutors(student)).mails
 
