@@ -41,7 +41,7 @@ class MailService {
     sendMail(payload, config){
         const commitName = payload.head_commit.message;
         console.log(commitName);
-        if (commitName.includes("terminado")) {
+        if (commitName && commitName.toLowerCase().includes("terminado")) {
             return this.sendMailToTeachers(payload,config);
         }
         return Promise.resolve();
