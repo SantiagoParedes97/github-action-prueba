@@ -71,7 +71,7 @@ async function getTutorsMailFor(githubUser,config) {
 async function updateTp(githubUser,repository,config){
     const committerStudent = await getStudentBy(githubUser,config,0)
     index = committerStudent._rawData.findIndex(data => data === repository);
-    if(index >=0 ){
+    if(index >0 ){
         committerStudent._rawData[index-1] = 'E';
         committerStudent.save();
     }
