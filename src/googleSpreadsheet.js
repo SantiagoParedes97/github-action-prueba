@@ -1,7 +1,6 @@
 const {GoogleSpreadsheet} = require('google-spreadsheet')
 const core = require('@actions/core');
 
-//sacar esta villereada
 const tutors = [
     {
         coupleName: 'Rasta & Anto',
@@ -14,8 +13,7 @@ const tutors = [
     },
     {
         coupleName:'Santi & DaniM',
-        mails: ["santiagoparedes97@gmail.com"]
-
+        mails: ["santiagoparedes97@gmail.com,mdmereles30@gmail.com"]
     },
     {
         coupleName:
@@ -61,6 +59,7 @@ const getStudentBy = async (githubUser,config,index) => {
     const getGithubUser = (student) => student._rawData[5];
     return rows.find(student => getGithubUser(student) === githubUser)
 }
+
 async function getTutorsMailFor(githubUser,config) {
     const committerStudent = await getStudentBy(githubUser,config,0)
     const getTutors = (student) => student._rawData[7]

@@ -20,7 +20,7 @@ class MailService {
     getTeachersMails(payload,config){
         const author = payload.pusher.name;
         console.log("Author: " + author);
-        return getTeachersMails(author,config);
+        return getTutorsMailFor(author,config);
     }
 
     sendMailToTeachers(payload,config){
