@@ -60,6 +60,7 @@ async function getTutorsMailFor(githubUser,config) {
     const getGithubUser = (student) => student._rawData[5];
     const committerStudent = rows.find(student => getGithubUser(student) === githubUser)
     const getTutors = (student) => student._rawData[7]
+    console.log(committerStudent)
     committerStudent.save()
 
 
