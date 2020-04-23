@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer")
-
+const {updateTp,getTeachersMails} = require('./googleSpreadsheet')
 
 class MailService {
     mailOptions(from, to,payload){
@@ -11,13 +11,18 @@ class MailService {
             text: payload.repository.clone_url
         };
     }
+    updateNote(payload,config){
+        const author = payload.pusher.name;
+        const repository = payload.repository.html_url;
+        return updateTp(author,repository,config);
+    }
 
     getTeachersMails(payload,config){
         const author = payload.pusher.name;
         console.log("Author: " + author);
-        const getTeachersMails = require('./googleSpreadsheet')
         return getTeachersMails(author,config);
     }
+
     sendMailToTeachers(payload,config){
         const {username, password, from} = config;
 
@@ -42,7 +47,7 @@ class MailService {
         console.log(payload)
         const commitName = payload.head_commit.message;
         if (commitName && commitName.toLowerCase().includes("terminado")) {
-            return this.sendMailToTeachers(payload,config);
+            return this.sendMailToTeachers(payload,config).then(() => this.updateNote(payload,config))
         }
         return Promise.resolve();
     }

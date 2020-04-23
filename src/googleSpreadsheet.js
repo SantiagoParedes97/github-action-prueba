@@ -43,7 +43,7 @@ const tutors = [
     }
 ]
 
-async function getTutorsMailFor(githubUser,config) {
+ const getSheetBy= async(config,index) => {
     const doc = new GoogleSpreadsheet('1kavXnCLLdoKoXMVlw6_wFolzBvIuuNG9oqxNbc4Dwu8')
     const clientEmail = config.client_email
     const privateKey = config.private_key
@@ -53,20 +53,29 @@ async function getTutorsMailFor(githubUser,config) {
         private_key: privateKey,
     });
     await doc.loadInfo(); // loads document properties and worksheets
-    console.log(doc.title);
-
-    const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
+    return doc.sheetsByIndex[index];
+}
+const getStudentBy = async (githubUser,config,index) => {
+    const sheet = await getSheetBy(config,index);
     const rows = await sheet.getRows({limit: 150, offset: 2}); // or use doc.sheetsById[id]
     const getGithubUser = (student) => student._rawData[5];
-    const committerStudent = rows.find(student => getGithubUser(student) === githubUser)
+    return rows.find(student => getGithubUser(student) === githubUser)
+}
+async function getTutorsMailFor(githubUser,config) {
+    const committerStudent = await getStudentBy(githubUser,config,0)
     const getTutors = (student) => student._rawData[7]
-    console.log(committerStudent)
-    committerStudent.save()
-
-
     const getTutorsMail = (student) => tutors.find(tutorsCouple => tutorsCouple.coupleName === getTutors(student)).mails
-
     return getTutorsMail(committerStudent);
 }
 
-module.exports = getTutorsMailFor
+
+async function updateTp(githubUser,repository,config){
+    const committerStudent = await getStudentBy(githubUser,config,0)
+    index = committerStudent._rawData.findIndex(data => data === repository);
+    if(index >=0 ){
+        committerStudent._rawData[index-1] = 'E';
+        committerStudent.save();
+    }
+}
+
+module.exports = {getTutorsMailFor,updateTp}
