@@ -57,7 +57,7 @@ const getStudentBy = async (githubUser,config,index) => {
     const sheet = await getSheetBy(config,index);
     const rows = await sheet.getRows({limit: 150, offset: 2}); // or use doc.sheetsById[id]
     const getGithubUser = (student) => student._rawData[5];
-    return rows.find(student => getGithubUser(student) === githubUser)
+    return rows.find(student => getGithubUser(student).toLowerCase() === githubUser.toLowerCase())
 }
 
 async function getTutorsMailFor(githubUser,config) {
