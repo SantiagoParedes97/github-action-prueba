@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer")
-const {updateTp,getTeachersMails} = require('./googleSpreadsheet')
+const {updateTp,getTutorsMailFor} = require('./googleSpreadsheet')
 
 class MailService {
     mailOptions(from, to,payload){
