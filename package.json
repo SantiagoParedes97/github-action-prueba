@@ -18,7 +18,7 @@
     "express": "^4.17.1",
     "express-github-webhook": "^1.0.6",
     "google-spreadsheet": "^3.0.11",
-    "nodemailer": "^6.4.6"
+    "nodemailer": "^6.4.16"
   },
   "engines": {
     "node": "12.x"
